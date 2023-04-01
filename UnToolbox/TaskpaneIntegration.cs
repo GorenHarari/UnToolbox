@@ -52,6 +52,7 @@ namespace UnToolbox
             mSwCookie = Cookie;
 
             var ok = mSolidworksApplication.SetAddinCallbackInfo2(0, this, mSwCookie);
+            AddInModel addInModel = new AddInModel(mSolidworksApplication);
 
             LoadUI();
 
