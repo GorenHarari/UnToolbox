@@ -1,0 +1,41 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 16
+VisualStudioVersion = 16.0.32802.440
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "UnToolbox", "UnToolbox\UnToolbox.csproj", "{45F0A333-CBDC-438B-B408-3A48976092A9}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AngelSix.SolidWorksApi.AddinInstaller", "..\solidworks-api-develop\solidworks-api-develop\Tools\Addin Installer\AngelSix.SolidWorksApi.AddinInstaller.csproj", "{09432F0F-4769-47AD-861E-3A88E66EB86C}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Debug|x64 = Debug|x64
+		Release|Any CPU = Release|Any CPU
+		Release|x64 = Release|x64
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{45F0A333-CBDC-438B-B408-3A48976092A9}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{45F0A333-CBDC-438B-B408-3A48976092A9}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{45F0A333-CBDC-438B-B408-3A48976092A9}.Debug|x64.ActiveCfg = Debug|Any CPU
+		{45F0A333-CBDC-438B-B408-3A48976092A9}.Debug|x64.Build.0 = Debug|Any CPU
+		{45F0A333-CBDC-438B-B408-3A48976092A9}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{45F0A333-CBDC-438B-B408-3A48976092A9}.Release|Any CPU.Build.0 = Release|Any CPU
+		{45F0A333-CBDC-438B-B408-3A48976092A9}.Release|x64.ActiveCfg = Release|Any CPU
+		{45F0A333-CBDC-438B-B408-3A48976092A9}.Release|x64.Build.0 = Release|Any CPU
+		{09432F0F-4769-47AD-861E-3A88E66EB86C}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{09432F0F-4769-47AD-861E-3A88E66EB86C}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{09432F0F-4769-47AD-861E-3A88E66EB86C}.Debug|x64.ActiveCfg = Debug|x64
+		{09432F0F-4769-47AD-861E-3A88E66EB86C}.Debug|x64.Build.0 = Debug|x64
+		{09432F0F-4769-47AD-861E-3A88E66EB86C}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{09432F0F-4769-47AD-861E-3A88E66EB86C}.Release|Any CPU.Build.0 = Release|Any CPU
+		{09432F0F-4769-47AD-861E-3A88E66EB86C}.Release|x64.ActiveCfg = Release|x64
+		{09432F0F-4769-47AD-861E-3A88E66EB86C}.Release|x64.Build.0 = Release|x64
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {BAAC28B1-39D4-47C7-852B-E80E2A47FF1D}
+	EndGlobalSection
+EndGlobal
