@@ -23,15 +23,19 @@ namespace UnToolbox
         public AddInModel(SldWorks _sldwrks, int addinID)
         {
             swApp = _sldwrks;
-            Frame swFrame = swApp.Frame();
-            string[] imageList = new string[6];
+            Frame swFrame = (Frame)swApp.Frame();
+
+            string[] imageList = new string[7];
             imageList[0] = @"C:\Users\Goren Harari\source\repos\UnToolbox\UnToolbox\bin\Debug\untoolbox icon 20x20.png";
             imageList[1] = @"C:\Users\Goren Harari\source\repos\UnToolbox\UnToolbox\bin\Debug\untoolbox icon 32x32.png";
             imageList[2] = @"C:\Users\Goren Harari\source\repos\UnToolbox\UnToolbox\bin\Debug\untoolbox icon 40x40.png";
             imageList[3] = @"C:\Users\Goren Harari\source\repos\UnToolbox\UnToolbox\bin\Debug\untoolbox icon 64x64.png";
             imageList[4] = @"C:\Users\Goren Harari\source\repos\UnToolbox\UnToolbox\bin\Debug\untoolbox icon 96x96.png";
             imageList[5] = @"C:\Users\Goren Harari\source\repos\UnToolbox\UnToolbox\bin\Debug\untoolbox icon 128x128.png";
-            bool resultCode = swFrame.AddMenuPopupIcon3((int)swDocumentTypes_e.swDocPART, (int)swSelectType_e.swSelFACES, "Third-party context-sensitive", addinID, "", "", "", imageList);
+            imageList[6] = @"C:\Users\Goren Harari\source\repos\UnToolbox\UnToolbox\bin\Debug\untoolbox icon.bmp";
+
+            bool resultCodeA = swFrame.AddMenuPopupIcon3((int)swDocumentTypes_e.swDocASSEMBLY, (int)swSelectType_e.swSelCOMPONENTS, "Third-party context-sensitive", addinID, "CSCallbackFunction", "CSEnable", "", imageList);
+            bool resultCodeP = swFrame.AddMenuPopupIcon3((int)swDocumentTypes_e.swDocPART, (int)swSelectType_e.swSelFACES, "Third-party context-sensitive", addinID, "CSCallbackFunction", "CSEnable", "", imageList);
 
             //swModel = (ModelDoc2)swApp.ActiveDoc;
 
@@ -102,7 +106,7 @@ namespace UnToolbox
             return 0;
         }
 
-        public int aDoc_UserSelectionPostNotify()
+        private int aDoc_UserSelectionPostNotify()
         {
             int functionReturnValue = 0;
             SelectionMgr selectionMgr = (SelectionMgr)swModel.SelectionManager;
@@ -113,6 +117,25 @@ namespace UnToolbox
             if(isToolboxPart != (int)swToolBoxPartType_e.swNotAToolboxPart)
                 Debug.WriteLine("Toolbox part was selected in a assembly document.");
 
+            return functionReturnValue;
+        }
+
+        private void CSCallbackFunction()
+        {
+            
+        }
+
+        private int CSEnable()
+        {
+            int functionReturnValue = 0;
+            if (swApp.ActiveDoc == null)
+            {
+                functionReturnValue = 0;
+            }
+            else
+            {
+                functionReturnValue = 1;
+            }
             return functionReturnValue;
         }
 
