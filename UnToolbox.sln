@@ -5,8 +5,6 @@ VisualStudioVersion = 16.0.32802.440
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "UnToolbox", "UnToolbox\UnToolbox.csproj", "{45F0A333-CBDC-438B-B408-3A48976092A9}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AngelSix.SolidWorksApi.AddinInstaller", "..\solidworks-api-develop\solidworks-api-develop\Tools\Addin Installer\AngelSix.SolidWorksApi.AddinInstaller.csproj", "{09432F0F-4769-47AD-861E-3A88E66EB86C}"
-EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -23,14 +21,6 @@ Global
 		{45F0A333-CBDC-438B-B408-3A48976092A9}.Release|Any CPU.Build.0 = Release|Any CPU
 		{45F0A333-CBDC-438B-B408-3A48976092A9}.Release|x64.ActiveCfg = Release|Any CPU
 		{45F0A333-CBDC-438B-B408-3A48976092A9}.Release|x64.Build.0 = Release|Any CPU
-		{09432F0F-4769-47AD-861E-3A88E66EB86C}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{09432F0F-4769-47AD-861E-3A88E66EB86C}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{09432F0F-4769-47AD-861E-3A88E66EB86C}.Debug|x64.ActiveCfg = Debug|x64
-		{09432F0F-4769-47AD-861E-3A88E66EB86C}.Debug|x64.Build.0 = Debug|x64
-		{09432F0F-4769-47AD-861E-3A88E66EB86C}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{09432F0F-4769-47AD-861E-3A88E66EB86C}.Release|Any CPU.Build.0 = Release|Any CPU
-		{09432F0F-4769-47AD-861E-3A88E66EB86C}.Release|x64.ActiveCfg = Release|x64
-		{09432F0F-4769-47AD-861E-3A88E66EB86C}.Release|x64.Build.0 = Release|x64
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
