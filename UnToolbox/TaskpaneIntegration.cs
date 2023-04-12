@@ -2,11 +2,13 @@
 using SolidWorks.Interop.swpublished;
 using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.IO;
 using System.Linq;
 using System.Runtime.InteropServices;
 using System.Text;
 using System.Threading.Tasks;
+using System.Windows.Forms;
 
 namespace UnToolbox
 {
@@ -80,6 +82,20 @@ namespace UnToolbox
             mTaskpaneView.DeleteView();
             Marshal.ReleaseComObject(mTaskpaneView);
             mTaskpaneView = null;
+        }
+
+        #endregion
+
+        #region " UI Callbacks"
+        public void CSCallbackFunction()
+        {
+            Debug.WriteLine("Context sensitive menu icon was clicked");
+            MessageBox.Show("icon was clicked");
+        }
+
+        public int CSEnable()
+        {
+            return 1;
         }
 
         #endregion

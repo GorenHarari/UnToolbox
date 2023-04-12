@@ -36,10 +36,7 @@ namespace UnToolbox
             
             bool resultCode = swFrame.AddMenuPopupIcon3((int)swDocumentTypes_e.swDocPART, (int)swSelectType_e.swSelFACES, "Third-party context-sensitive", addinID, "CSCallbackFunction", "CSEnable", "", imageList);
 
-            bool resultCodeA = swFrame.AddMenuPopupIcon3((int)swDocumentTypes_e.swDocASSEMBLY, (int)swSelectType_e.swSelCOMPONENTS, "Third-party context-sensitive", addinID, "CSCallbackFunction", "CSEnable", "", imageList);
-
-            //registerID = swApp.RegisterThirdPartyPopupMenu();
-            //bool resultCode = swApp.AddItemToThirdPartyPopupMenu2(registerID, Convert.ToInt32(swDocumentTypes_e.swDocPART), "Test1", addinID, "TestCallback", "EnableTest", "", "Test1", imageList[0], Convert.ToInt32(swMenuItemType_e.swMenuItemType_Default));
+            //bool resultCodeA = swFrame.AddMenuPopupIcon3((int)swDocumentTypes_e.swDocASSEMBLY, (int)swSelectType_e.swSelCOMPONENTS, "Third-party context-sensitive", addinID, "CSCallbackFunction", "CSEnable", "", imageList);
 
             //swModel = (ModelDoc2)swApp.ActiveDoc;
 
@@ -121,25 +118,6 @@ namespace UnToolbox
             if(isToolboxPart != (int)swToolBoxPartType_e.swNotAToolboxPart)
                 Debug.WriteLine("Toolbox part was selected in a assembly document.");
 
-            return functionReturnValue;
-        }
-
-        private void CSCallbackFunction()
-        {
-            Debug.WriteLine("Context sensitive meni icon was clicked");
-        }
-
-        private int CSEnable()
-        {
-            int functionReturnValue = 0;
-            if (swApp.ActiveDoc == null)
-            {
-                functionReturnValue = 0;
-            }
-            else
-            {
-                functionReturnValue = 1;
-            }
             return functionReturnValue;
         }
 
