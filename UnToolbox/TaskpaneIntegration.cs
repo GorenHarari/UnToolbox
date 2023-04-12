@@ -216,7 +216,7 @@ namespace UnToolbox
             //save the part and the assembly
             bool status = newModelDoc2.Save3((int)swSaveAsOptions_e.swSaveAsOptions_Silent, ref lErrors, ref lWarnings);
             Debug.WriteLine("save was successful: " + status.ToString());
-            //activeDoc.ForceRebuild3(false);
+            activeDoc.ForceRebuild3(false);
             status = activeDoc.Save3((int)swSaveAsOptions_e.swSaveAsOptions_Silent, ref lErrors, ref lWarnings);
             Debug.WriteLine("save was successful: " + status.ToString());
             //activeDoc.ForceRebuild3(false);
