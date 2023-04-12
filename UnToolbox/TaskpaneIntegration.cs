@@ -31,7 +31,9 @@ namespace UnToolbox
         private TaskpaneHostUI mTaskpaneHost;
 
         private SldWorks mSolidworksApplication;
-        private ModelDoc2 swModel;
+        private ModelDoc2 activeDoc;
+        private string selectedFilePath;
+        private string pathMod = string.Empty;
 
         private string[] imageList = {
             @"C:\Users\Goren Harari\source\repos\UnToolbox\UnToolbox\bin\Debug\untoolbox icon 20x20.png",
@@ -102,13 +104,38 @@ namespace UnToolbox
         public void CSCallbackFunction()
         {
             Debug.WriteLine("Context sensitive menu icon was clicked");
-            MessageBox.Show("icon was clicked");
+
+            SaveFileDialog saveFile = new SaveFileDialog();
+            saveFile.DefaultExt = ".sldprt";
+            saveFile.AddExtension = true;
+            saveFile.Title = "Save As";
+            saveFile.InitialDirectory = Path.GetDirectoryName(activeDoc.GetPathName());
+            string currentFileName = Path.GetFileName(selectedFilePath);
+            saveFile.FileName = Path.GetFileName(currentFileName);
+
+            AssemblyDoc assemblyDoc = (AssemblyDoc)activeDoc;
+            
+
+            if (saveFile.ShowDialog() == DialogResult.OK && saveFile.FileName != currentFileName)
+            {
+                pathMod = saveFile.FileName;
+                Debug.WriteLine("Save file to: " + pathMod);
+                bool retVal = assemblyDoc.MakeIndependent(pathMod);
+                Debug.WriteLine("Make independent returned: " + retVal.ToString());
+            }
+            else
+            {
+                MessageBox.Show("please select different file name");
+                CSCallbackFunction();
+            }
+
+            mSolidworksApplication.OnIdleNotify += this.swApp_OnIdleNotify;
         }
 
         public int CSEnable()
         {
             int isToolboxPart = 0;
-            SelectionMgr selectionMgr = (SelectionMgr)swModel.SelectionManager;
+            SelectionMgr selectionMgr = (SelectionMgr)activeDoc.SelectionManager;
             Component2 comp2 = selectionMgr.GetSelectedObjectsComponent4(1, -1);
             ModelDoc2 selectedModelDoc = comp2.GetModelDoc2();
             ModelDocExtension modelDocExtension = selectedModelDoc.Extension;
@@ -116,9 +143,9 @@ namespace UnToolbox
             if (isToolboxPart != (int)swToolBoxPartType_e.swNotAToolboxPart)
             {
                 Debug.WriteLine("Toolbox part was selected in a assembly document.");
+                selectedFilePath = selectedModelDoc.GetPathName();
                 isToolboxPart = 1;
             }
-
             return isToolboxPart;
         }
         #endregion
@@ -139,7 +166,45 @@ namespace UnToolbox
         private int swApp_ActiveDocChangeNotify()
         {
             Debug.WriteLine("Active Doc changed event fired");
-            swModel = mSolidworksApplication.ActiveDoc;
+            activeDoc = mSolidworksApplication.ActiveDoc;
+            return 0;
+        }
+
+        private int swApp_OnIdleNotify()
+        {
+            Debug.WriteLine("On idle event fired");
+            AssemblyDoc assemblyDoc = (AssemblyDoc)activeDoc;
+            string fileToModify = Path.GetFileNameWithoutExtension(pathMod);
+            int count = assemblyDoc.GetComponentCount(false);
+            Debug.WriteLine("amount of components including children: " + count.ToString());
+            object[] components = assemblyDoc.GetComponents(false);
+            foreach(object compInstance in components)
+            {
+                Component2 component = (Component2)compInstance;
+                string compName = component.Name2;
+                Debug.WriteLine(compName);
+            }
+
+
+            Component2 comp = assemblyDoc.GetComponentByName(fileToModify+"-1");
+            ModelDoc2 newModelDoc2 = comp.GetModelDoc2();
+            ModelDocExtension modelDocExtension = newModelDoc2.Extension;
+            modelDocExtension.ToolboxPartType = (int)swToolBoxPartType_e.swNotAToolboxPart;
+            mSolidworksApplication.OnIdleNotify -= this.swApp_OnIdleNotify;
+
+            //modelDocExtension = activeDoc.Extension;
+            //modelDocExtension.ForceRebuildAll
+
+            int lErrors=0;
+            int lWarnings=0;
+            
+            bool status = newModelDoc2.Save3((int)swSaveAsOptions_e.swSaveAsOptions_Silent, ref lErrors, ref lWarnings);
+            Debug.WriteLine("save was successful: " + status.ToString());
+            //activeDoc.ForceRebuild3(false);
+            status = activeDoc.Save3((int)swSaveAsOptions_e.swSaveAsOptions_Silent, ref lErrors, ref lWarnings);
+            Debug.WriteLine("save was successful: " + status.ToString());
+            //activeDoc.ForceRebuild3(false);
+
             return 0;
         }
 
