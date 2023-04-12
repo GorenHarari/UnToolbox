@@ -102,7 +102,19 @@
     </COMReference>
   </ItemGroup>
   <ItemGroup>
-    <Content Include="Resources\untoolbox icon.bmp">
+    <Content Include="Resources\untoolbox icon 20x20.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Resources\untoolbox icon 32x32.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Resources\untoolbox icon 40x40.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Resources\untoolbox icon 64x64.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Resources\untoolbox icon 96x96.png">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
     <Content Include="Resources\untoolbox icon_16x16.png">

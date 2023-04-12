@@ -6,6 +6,7 @@ using System.Collections.Generic;
 using System.Diagnostics;
 using System.IO;
 using System.Linq;
+using System.Reflection;
 using System.Runtime.InteropServices;
 using System.Text;
 using System.Threading.Tasks;
@@ -31,21 +32,27 @@ namespace UnToolbox
         private TaskpaneHostUI mTaskpaneHost;
 
         private SldWorks mSolidworksApplication;
-        // the active asswsembly
+        // the active assesembly
         private ModelDoc2 activeDoc;
         //the path of the selected file, used to get file name
         private string selectedFilePath;
         //the path of the new part
         private string pathMod = string.Empty;
-
-        // icons for the context sensitive menu
+        //DLL location
+        static string assemblyFolder = Path.GetDirectoryName(Assembly.GetExecutingAssembly().CodeBase).Replace(@"file:\", "");
+        //icons location in reference to the DLL
+        static string iconPath20x20 = Path.Combine(assemblyFolder , @"Resources\untoolbox icon 20x20.png");
+        static string iconPath32x32 = Path.Combine(assemblyFolder , @"Resources\untoolbox icon 32x32.png");
+        static string iconPath40x40 = Path.Combine(assemblyFolder , @"Resources\untoolbox icon 40x40.png");
+        static string iconPath64x64 = Path.Combine(assemblyFolder , @"Resources\untoolbox icon 64x64.png");
+        static string iconPath96x96 = Path.Combine(assemblyFolder , @"Resources\untoolbox icon 96x96.png");
+        //icons for the context sensitive menu
         private string[] imageList = {
-            @"C:\Users\Goren Harari\source\repos\UnToolbox\UnToolbox\bin\Debug\untoolbox icon 20x20.png",
-            @"C:\Users\Goren Harari\source\repos\UnToolbox\UnToolbox\bin\Debug\untoolbox icon 32x32.png",
-            @"C:\Users\Goren Harari\source\repos\UnToolbox\UnToolbox\bin\Debug\untoolbox icon 40x40.png",
-            @"C:\Users\Goren Harari\source\repos\UnToolbox\UnToolbox\bin\Debug\untoolbox icon 64x64.png",
-            @"C:\Users\Goren Harari\source\repos\UnToolbox\UnToolbox\bin\Debug\untoolbox icon 96x96.png",
-            @"C:\Users\Goren Harari\source\repos\UnToolbox\UnToolbox\bin\Debug\untoolbox icon 128x128.png"};
+            iconPath20x20,
+            iconPath32x32,
+            iconPath40x40,
+            iconPath64x64,
+            iconPath96x96};
         #endregion
 
         #region public members
