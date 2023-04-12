@@ -34,9 +34,14 @@ namespace UnToolbox
             imageList[4] = @"C:\Users\Goren Harari\source\repos\UnToolbox\UnToolbox\bin\Debug\untoolbox icon 96x96.png";
             imageList[5] = @"C:\Users\Goren Harari\source\repos\UnToolbox\UnToolbox\bin\Debug\untoolbox icon 128x128.png";
             
-            bool resultCode = swFrame.AddMenuPopupIcon3((int)swDocumentTypes_e.swDocPART, (int)swSelectType_e.swSelFACES, "Third-party context-sensitive", addinID, "CSCallbackFunction", "CSEnable", "", imageList);
+            //bool resultCode = swFrame.AddMenuPopupIcon3((int)swDocumentTypes_e.swDocPART, (int)swSelectType_e.swSelFACES, "Third-party context-sensitive", addinID, "CSCallbackFunction", "CSEnable", "", imageList);
 
-            //bool resultCodeA = swFrame.AddMenuPopupIcon3((int)swDocumentTypes_e.swDocASSEMBLY, (int)swSelectType_e.swSelCOMPONENTS, "Third-party context-sensitive", addinID, "CSCallbackFunction", "CSEnable", "", imageList);
+            bool resultCodeA = swFrame.AddMenuPopupIcon3((int)swDocumentTypes_e.swDocASSEMBLY, (int)swSelectType_e.swSelFACES, "Third-party context-sensitive", addinID, "CSCallbackFunction", "CSEnable", "", imageList);
+
+
+
+
+
 
             //swModel = (ModelDoc2)swApp.ActiveDoc;
 

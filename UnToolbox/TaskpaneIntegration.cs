@@ -1,4 +1,5 @@
 ﻿using SolidWorks.Interop.sldworks;
+using SolidWorks.Interop.swconst;
 using SolidWorks.Interop.swpublished;
 using System;
 using System.Collections.Generic;
@@ -30,9 +31,15 @@ namespace UnToolbox
         private TaskpaneHostUI mTaskpaneHost;
 
         private SldWorks mSolidworksApplication;
+        private ModelDoc2 swModel;
 
-
-
+        private string[] imageList = {
+            @"C:\Users\Goren Harari\source\repos\UnToolbox\UnToolbox\bin\Debug\untoolbox icon 20x20.png",
+            @"C:\Users\Goren Harari\source\repos\UnToolbox\UnToolbox\bin\Debug\untoolbox icon 32x32.png",
+            @"C:\Users\Goren Harari\source\repos\UnToolbox\UnToolbox\bin\Debug\untoolbox icon 40x40.png",
+            @"C:\Users\Goren Harari\source\repos\UnToolbox\UnToolbox\bin\Debug\untoolbox icon 64x64.png",
+            @"C:\Users\Goren Harari\source\repos\UnToolbox\UnToolbox\bin\Debug\untoolbox icon 96x96.png",
+            @"C:\Users\Goren Harari\source\repos\UnToolbox\UnToolbox\bin\Debug\untoolbox icon 128x128.png"};
         #endregion
 
         #region public members
@@ -52,18 +59,25 @@ namespace UnToolbox
         {
             mSolidworksApplication = (SldWorks)ThisSW;
             mSwCookie = Cookie;
+            Frame swFrame = (Frame)mSolidworksApplication.Frame();
 
             var ok = mSolidworksApplication.SetAddinCallbackInfo2(0, this, mSwCookie);
-            AddInModel addInModel = new AddInModel(mSolidworksApplication, Cookie);
 
-            LoadUI();
+            bool resultCodeA = swFrame.AddMenuPopupIcon3((int)swDocumentTypes_e.swDocASSEMBLY, (int)swSelectType_e.swSelFACES, "Third-party context-sensitive", mSwCookie, "CSCallbackFunction", "CSEnable", "", imageList);
+            resultCodeA = swFrame.AddMenuPopupIcon3((int)swDocumentTypes_e.swDocASSEMBLY, (int)swSelectType_e.swSelCOMPONENTS, "Third-party context-sensitive", mSwCookie, "CSCallbackFunction", "CSEnable", "", imageList);
+
+            AttachEventHandlers();
+
+            //AddInModel addInModel = new AddInModel(mSolidworksApplication, Cookie);
+
+            //LoadUI();
 
             return true;
         }
 
         public bool DisconnectFromSW()
         {
-            UnloadUI();
+            //UnloadUI();
             return true;
         }
         #endregion
@@ -95,7 +109,40 @@ namespace UnToolbox
 
         public int CSEnable()
         {
-            return 1;
+            int isToolboxPart = 0;
+            SelectionMgr selectionMgr = (SelectionMgr)swModel.SelectionManager;
+            Component2 comp2 = selectionMgr.GetSelectedObjectsComponent4(1, -1);
+            ModelDoc2 selectedModelDoc = comp2.GetModelDoc2();
+            ModelDocExtension modelDocExtension = selectedModelDoc.Extension;
+            isToolboxPart = modelDocExtension.ToolboxPartType;
+            if (isToolboxPart != (int)swToolBoxPartType_e.swNotAToolboxPart)
+            {
+                Debug.WriteLine("Toolbox part was selected in a assembly document.");
+                isToolboxPart = 1;
+            }
+
+            return isToolboxPart;
+        }
+        #endregion
+
+        #region events handlers
+
+        public void AttachEventHandlers()
+        {
+            AttachSWEvents();
+        }
+
+
+        private void AttachSWEvents()
+        {
+            mSolidworksApplication.ActiveDocChangeNotify += this.swApp_ActiveDocChangeNotify;
+        }
+
+        private int swApp_ActiveDocChangeNotify()
+        {
+            Debug.WriteLine("Active Doc changed event fired");
+            swModel = mSolidworksApplication.ActiveDoc;
+            return 0;
         }
 
         #endregion
