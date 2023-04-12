@@ -31,10 +31,14 @@ namespace UnToolbox
         private TaskpaneHostUI mTaskpaneHost;
 
         private SldWorks mSolidworksApplication;
+        // the active asswsembly
         private ModelDoc2 activeDoc;
+        //the path of the selected file, used to get file name
         private string selectedFilePath;
+        //the path of the new part
         private string pathMod = string.Empty;
 
+        // icons for the context sensitive menu
         private string[] imageList = {
             @"C:\Users\Goren Harari\source\repos\UnToolbox\UnToolbox\bin\Debug\untoolbox icon 20x20.png",
             @"C:\Users\Goren Harari\source\repos\UnToolbox\UnToolbox\bin\Debug\untoolbox icon 32x32.png",
@@ -65,11 +69,14 @@ namespace UnToolbox
 
             var ok = mSolidworksApplication.SetAddinCallbackInfo2(0, this, mSwCookie);
 
+            //add the icon to the relevant context sensitive menus
             bool resultCodeA = swFrame.AddMenuPopupIcon3((int)swDocumentTypes_e.swDocASSEMBLY, (int)swSelectType_e.swSelFACES, "Third-party context-sensitive", mSwCookie, "CSCallbackFunction", "CSEnable", "", imageList);
             resultCodeA = swFrame.AddMenuPopupIcon3((int)swDocumentTypes_e.swDocASSEMBLY, (int)swSelectType_e.swSelCOMPONENTS, "Third-party context-sensitive", mSwCookie, "CSCallbackFunction", "CSEnable", "", imageList);
 
+            //attach solidworks event listeners
             AttachEventHandlers();
 
+            //task pane UI
             //LoadUI();
 
             return true;
@@ -77,6 +84,7 @@ namespace UnToolbox
 
         public bool DisconnectFromSW()
         {
+            //unload taskpane UI
             //UnloadUI();
             return true;
         }
@@ -101,21 +109,24 @@ namespace UnToolbox
         #endregion
 
         #region " UI Callbacks"
+        //called when the icon in the context sensitive manu is clicked
         public void CSCallbackFunction()
         {
             Debug.WriteLine("Context sensitive menu icon was clicked");
 
+            //initialize the save as dialob box
             SaveFileDialog saveFile = new SaveFileDialog();
             saveFile.DefaultExt = ".sldprt";
             saveFile.AddExtension = true;
             saveFile.Title = "Save As";
             saveFile.InitialDirectory = Path.GetDirectoryName(activeDoc.GetPathName());
+            //store the cuuurent file name to compare to the new file name
             string currentFileName = Path.GetFileName(selectedFilePath);
             saveFile.FileName = Path.GetFileName(currentFileName);
 
             AssemblyDoc assemblyDoc = (AssemblyDoc)activeDoc;
             
-
+            //make part independent if the save as dialog box is ok
             if (saveFile.ShowDialog() == DialogResult.OK && saveFile.FileName != currentFileName)
             {
                 pathMod = saveFile.FileName;
@@ -129,17 +140,21 @@ namespace UnToolbox
                 CSCallbackFunction();
             }
 
+            //add event listener to when solidworks is idle, this is need to implement the referenced file change in the assembly after the make independent
             mSolidworksApplication.OnIdleNotify += this.swApp_OnIdleNotify;
         }
 
+        //desides wether to show or hide the icon in the context sensitive menu
         public int CSEnable()
         {
+            //check wether the selected part in the assembly is toolbox or not
             int isToolboxPart = 0;
             SelectionMgr selectionMgr = (SelectionMgr)activeDoc.SelectionManager;
             Component2 comp2 = selectionMgr.GetSelectedObjectsComponent4(1, -1);
             ModelDoc2 selectedModelDoc = comp2.GetModelDoc2();
             ModelDocExtension modelDocExtension = selectedModelDoc.Extension;
             isToolboxPart = modelDocExtension.ToolboxPartType;
+            //if it is toolbox show the icon in the context sensitive menu, hide it if it not
             if (isToolboxPart != (int)swToolBoxPartType_e.swNotAToolboxPart)
             {
                 Debug.WriteLine("Toolbox part was selected in a assembly document.");
@@ -163,6 +178,7 @@ namespace UnToolbox
             mSolidworksApplication.ActiveDocChangeNotify += this.swApp_ActiveDocChangeNotify;
         }
 
+        //get the model doc of the active doc
         private int swApp_ActiveDocChangeNotify()
         {
             Debug.WriteLine("Active Doc changed event fired");
@@ -170,8 +186,10 @@ namespace UnToolbox
             return 0;
         }
 
+        //solidworks idle event listener
         private int swApp_OnIdleNotify()
         {
+            //get the path of the newly created file to untoolbox it
             Debug.WriteLine("On idle event fired");
             AssemblyDoc assemblyDoc = (AssemblyDoc)activeDoc;
             string fileToModify = Path.GetFileNameWithoutExtension(pathMod);
@@ -185,19 +203,17 @@ namespace UnToolbox
                 Debug.WriteLine(compName);
             }
 
-
+            //untoolbox the part
             Component2 comp = assemblyDoc.GetComponentByName(fileToModify+"-1");
             ModelDoc2 newModelDoc2 = comp.GetModelDoc2();
             ModelDocExtension modelDocExtension = newModelDoc2.Extension;
             modelDocExtension.ToolboxPartType = (int)swToolBoxPartType_e.swNotAToolboxPart;
             mSolidworksApplication.OnIdleNotify -= this.swApp_OnIdleNotify;
 
-            //modelDocExtension = activeDoc.Extension;
-            //modelDocExtension.ForceRebuildAll
-
             int lErrors=0;
             int lWarnings=0;
             
+            //save the part and the assembly
             bool status = newModelDoc2.Save3((int)swSaveAsOptions_e.swSaveAsOptions_Silent, ref lErrors, ref lWarnings);
             Debug.WriteLine("save was successful: " + status.ToString());
             //activeDoc.ForceRebuild3(false);
