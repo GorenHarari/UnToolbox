@@ -241,11 +241,11 @@ namespace UnToolbox
             using (var rk = Microsoft.Win32.Registry.LocalMachine.CreateSubKey(ketPath))
             {
                 //Load Add-in when solidworks opens
-                rk.SetValue(null, 1);
+                rk.SetValue(null, 0);
 
                 //set solidworks add-in title and description
                 rk.SetValue("Title", "UnToolbox");
-                rk.SetValue("Description", "convert toolbox part tonormal part");
+                rk.SetValue("Description", "convert toolbox part to normal part");
             }
         }
 

@@ -92,6 +92,14 @@
             "PrerequisitesLocation" = "2:1"
             "Url" = "8:"
             "ComponentsUrl" = "8:"
+                "Items"
+                {
+                    "{EDC2488A-8267-493A-A98E-7D9C3B36CDF3}:.NETFramework,Version=v4.7.2"
+                    {
+                    "Name" = "8:Microsoft .NET Framework 4.7.2 (x86 and x64)"
+                    "ProductCode" = "8:.NETFramework,Version=v4.7.2"
+                    }
+                }
             }
         }
         "Release"
@@ -374,7 +382,7 @@
         "Name" = "8:Microsoft Visual Studio"
         "ProductName" = "8:Untoolbox"
         "ProductCode" = "8:{B995652B-9220-450F-A5C8-9DBCF65E72B8}"
-        "PackageCode" = "8:{1C26A677-C23A-4118-9AEB-04790D8D99F0}"
+        "PackageCode" = "8:{5C06C8E8-CFBE-4EA6-9730-D9B636C78BE6}"
         "UpgradeCode" = "8:{91F43716-2CB2-4FFF-9842-B95BC255BBB5}"
         "AspNetVersion" = "8:2.0.50727.0"
         "RestartWWWService" = "11:FALSE"
@@ -408,7 +416,7 @@
                 {
                     "{60EA8692-D2D5-43EB-80DC-7906BF13D6EF}:_3A5A208E65754462B18F06EDB962A0C1"
                     {
-                    "Name" = "8:Software"
+                    "Name" = "8:SOFTWARE"
                     "Condition" = "8:"
                     "AlwaysCreate" = "11:FALSE"
                     "DeleteAtUninstall" = "11:FALSE"
@@ -459,7 +467,7 @@
                                                     "Condition" = "8:"
                                                     "Transitive" = "11:FALSE"
                                                     "ValueTypes" = "3:1"
-                                                    "Value" = "8:Untoolbox"
+                                                    "Value" = "8:UnToolbox"
                                                     }
                                                     "{ADCFDA98-8FDD-45E4-90BC-E3D20B029870}:_BCFE9EF785624FB5B9CF209D0B2A9F71"
                                                     {
