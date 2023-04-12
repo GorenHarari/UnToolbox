@@ -32,22 +32,22 @@ namespace UnToolbox
         private TaskpaneHostUI mTaskpaneHost;
 
         private SldWorks mSolidworksApplication;
-        // the active assesembly
+        // the active assembly
         private ModelDoc2 activeDoc;
         //the path of the selected file, used to get file name
         private string selectedFilePath;
         //the path of the new part
         private string pathMod = string.Empty;
         //DLL location
-        static string assemblyFolder = Path.GetDirectoryName(Assembly.GetExecutingAssembly().CodeBase).Replace(@"file:\", "");
+        static readonly string assemblyFolder = Path.GetDirectoryName(Assembly.GetExecutingAssembly().CodeBase).Replace(@"file:\", "");
         //icons location in reference to the DLL
-        static string iconPath20x20 = Path.Combine(assemblyFolder , @"Resources\untoolbox icon 20x20.png");
-        static string iconPath32x32 = Path.Combine(assemblyFolder , @"Resources\untoolbox icon 32x32.png");
-        static string iconPath40x40 = Path.Combine(assemblyFolder , @"Resources\untoolbox icon 40x40.png");
-        static string iconPath64x64 = Path.Combine(assemblyFolder , @"Resources\untoolbox icon 64x64.png");
-        static string iconPath96x96 = Path.Combine(assemblyFolder , @"Resources\untoolbox icon 96x96.png");
+        static readonly string iconPath20x20 = Path.Combine(assemblyFolder , @"Resources\untoolbox icon 20x20.png");
+        static readonly string iconPath32x32 = Path.Combine(assemblyFolder , @"Resources\untoolbox icon 32x32.png");
+        static readonly string iconPath40x40 = Path.Combine(assemblyFolder , @"Resources\untoolbox icon 40x40.png");
+        static readonly string iconPath64x64 = Path.Combine(assemblyFolder , @"Resources\untoolbox icon 64x64.png");
+        static readonly string iconPath96x96 = Path.Combine(assemblyFolder , @"Resources\untoolbox icon 96x96.png");
         //icons for the context sensitive menu
-        private string[] imageList = {
+        private readonly string[] imageList = {
             iconPath20x20,
             iconPath32x32,
             iconPath40x40,
@@ -97,7 +97,7 @@ namespace UnToolbox
         }
         #endregion
 
-        #region Create UI
+        #region Create TaskPane UI
         private void LoadUI()
         {
             var imagePath = Path.Combine(Path.GetDirectoryName(typeof(TaskpaneIntegration).Assembly.CodeBase).Replace(@"file:\", ""), @"Resources\untoolbox icon_16x16.png");
@@ -115,7 +115,7 @@ namespace UnToolbox
 
         #endregion
 
-        #region " UI Callbacks"
+        #region context sensitive UI Callbacks
         //called when the icon in the context sensitive manu is clicked
         public void CSCallbackFunction()
         {
