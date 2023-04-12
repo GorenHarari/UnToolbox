@@ -63,7 +63,6 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="AddInModel.cs" />
     <Compile Include="TaskpaneHostUI.cs">
       <SubType>UserControl</SubType>
     </Compile>

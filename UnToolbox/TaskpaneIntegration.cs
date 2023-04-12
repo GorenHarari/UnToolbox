@@ -68,8 +68,6 @@ namespace UnToolbox
 
             AttachEventHandlers();
 
-            //AddInModel addInModel = new AddInModel(mSolidworksApplication, Cookie);
-
             //LoadUI();
 
             return true;
