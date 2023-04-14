@@ -1,2 +1,2 @@
-- find right sequence to change icon in the assembly design tree
-- prevent naming collision by not allowing any name in that already exsists in the assembly (all children)
+- find right rebuild sequence to change icon from toolbox to regular part in the assembly design tree
+- prevent naming collision by not allowing any name that already exsists in the assembly (including sub-assemblies)
