@@ -1,3 +1,2 @@
 - find right sequence to change icon in the assembly design tree
 - prevent naming collision by not allowing any name in that already exsists in the assembly (all children)
-- make installer work
