@@ -124,6 +124,14 @@
             "PrerequisitesLocation" = "2:1"
             "Url" = "8:"
             "ComponentsUrl" = "8:"
+                "Items"
+                {
+                    "{EDC2488A-8267-493A-A98E-7D9C3B36CDF3}:.NETFramework,Version=v4.7.2"
+                    {
+                    "Name" = "8:Microsoft .NET Framework 4.7.2 (x86 and x64)"
+                    "ProductCode" = "8:.NETFramework,Version=v4.7.2"
+                    }
+                }
             }
         }
     }
@@ -382,7 +390,7 @@
         "Name" = "8:Microsoft Visual Studio"
         "ProductName" = "8:Untoolbox"
         "ProductCode" = "8:{B995652B-9220-450F-A5C8-9DBCF65E72B8}"
-        "PackageCode" = "8:{5C06C8E8-CFBE-4EA6-9730-D9B636C78BE6}"
+        "PackageCode" = "8:{EC834553-5CA6-4719-9134-A5607820FB76}"
         "UpgradeCode" = "8:{91F43716-2CB2-4FFF-9842-B95BC255BBB5}"
         "AspNetVersion" = "8:2.0.50727.0"
         "RestartWWWService" = "11:FALSE"
@@ -446,16 +454,16 @@
                                             "Name" = "8:{252e0793-bb89-32bb-9d33-fd6a8bfda982}"
                                             "Condition" = "8:"
                                             "AlwaysCreate" = "11:FALSE"
-                                            "DeleteAtUninstall" = "11:FALSE"
+                                            "DeleteAtUninstall" = "11:TRUE"
                                             "Transitive" = "11:FALSE"
                                                 "Keys"
                                                 {
                                                 }
                                                 "Values"
                                                 {
-                                                    "{ADCFDA98-8FDD-45E4-90BC-E3D20B029870}:_8326977823844110A20F43EBBA03365C"
+                                                    "{ADCFDA98-8FDD-45E4-90BC-E3D20B029870}:_43AFE718962B47B08FBEA3A32C5559A9"
                                                     {
-                                                    "Name" = "8:(Default)"
+                                                    "Name" = "8:"
                                                     "Condition" = "8:"
                                                     "Transitive" = "11:FALSE"
                                                     "ValueTypes" = "3:3"
@@ -500,70 +508,6 @@
             {
                 "Keys"
                 {
-                    "{60EA8692-D2D5-43EB-80DC-7906BF13D6EF}:_6FFCC81E192943BEAA641783BFDE9EA5"
-                    {
-                    "Name" = "8:Software"
-                    "Condition" = "8:"
-                    "AlwaysCreate" = "11:FALSE"
-                    "DeleteAtUninstall" = "11:FALSE"
-                    "Transitive" = "11:FALSE"
-                        "Keys"
-                        {
-                            "{60EA8692-D2D5-43EB-80DC-7906BF13D6EF}:_46FDF35DEC1A4BCDA571374F1EBE89D6"
-                            {
-                            "Name" = "8:SolidWorks"
-                            "Condition" = "8:"
-                            "AlwaysCreate" = "11:FALSE"
-                            "DeleteAtUninstall" = "11:FALSE"
-                            "Transitive" = "11:FALSE"
-                                "Keys"
-                                {
-                                    "{60EA8692-D2D5-43EB-80DC-7906BF13D6EF}:_E20F5290A19F47FFB22F42DE0B0BC512"
-                                    {
-                                    "Name" = "8:AddInsStartup"
-                                    "Condition" = "8:"
-                                    "AlwaysCreate" = "11:FALSE"
-                                    "DeleteAtUninstall" = "11:FALSE"
-                                    "Transitive" = "11:FALSE"
-                                        "Keys"
-                                        {
-                                            "{60EA8692-D2D5-43EB-80DC-7906BF13D6EF}:_FF5C4FCF4E9D423BB4320775DB02F565"
-                                            {
-                                            "Name" = "8:{252e0793-bb89-32bb-9d33-fd6a8bfda982}"
-                                            "Condition" = "8:"
-                                            "AlwaysCreate" = "11:FALSE"
-                                            "DeleteAtUninstall" = "11:FALSE"
-                                            "Transitive" = "11:FALSE"
-                                                "Keys"
-                                                {
-                                                }
-                                                "Values"
-                                                {
-                                                    "{ADCFDA98-8FDD-45E4-90BC-E3D20B029870}:_481A9A49E6A24A80994329E6FC0194DD"
-                                                    {
-                                                    "Name" = "8:(Default)"
-                                                    "Condition" = "8:"
-                                                    "Transitive" = "11:FALSE"
-                                                    "ValueTypes" = "3:3"
-                                                    "Value" = "3:1"
-                                                    }
-                                                }
-                                            }
-                                        }
-                                        "Values"
-                                        {
-                                        }
-                                    }
-                                }
-                                "Values"
-                                {
-                                }
-                            }
-                        }
-                        "Values"
-                        {
-                        }
-                    }
                 }
             }
             "HKCR"
@@ -1008,7 +952,7 @@
             "Exclude" = "11:FALSE"
             "IsDependency" = "11:FALSE"
             "IsolateTo" = "8:"
-            "ProjectOutputGroupRegister" = "3:1"
+            "ProjectOutputGroupRegister" = "3:2"
             "OutputConfiguration" = "8:"
             "OutputGroupCanonicalName" = "8:Built"
             "OutputProjectGuid" = "8:{45F0A333-CBDC-438B-B408-3A48976092A9}"

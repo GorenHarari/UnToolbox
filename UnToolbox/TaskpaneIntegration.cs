@@ -215,7 +215,7 @@ namespace UnToolbox
             ModelDoc2 newModelDoc2 = comp.GetModelDoc2();
             ModelDocExtension modelDocExtension = newModelDoc2.Extension;
             modelDocExtension.ToolboxPartType = (int)swToolBoxPartType_e.swNotAToolboxPart;
-            mSolidworksApplication.OnIdleNotify -= this.swApp_OnIdleNotify;
+            
 
             int lErrors=0;
             int lWarnings=0;
@@ -223,11 +223,31 @@ namespace UnToolbox
             //save the part and the assembly
             bool status = newModelDoc2.Save3((int)swSaveAsOptions_e.swSaveAsOptions_Silent, ref lErrors, ref lWarnings);
             Debug.WriteLine("save was successful: " + status.ToString());
-            activeDoc.ForceRebuild3(false);
-            status = activeDoc.Save3((int)swSaveAsOptions_e.swSaveAsOptions_Silent, ref lErrors, ref lWarnings);
-            Debug.WriteLine("save was successful: " + status.ToString());
             //activeDoc.ForceRebuild3(false);
+            //modelDocExtension = activeDoc.Extension;
+            //status = activeDoc.Save3((int)swSaveAsOptions_e.swSaveAsOptions_Silent, ref lErrors, ref lWarnings);
+            //modelDocExtension.Rebuild((int)swRebuildOptions_e.swRebuildAll);
+            //Debug.WriteLine("save was successful: " + status.ToString());
 
+            //remove event listener to avoid running code each tome solidworks becomes idle
+            mSolidworksApplication.OnIdleNotify -= this.swApp_OnIdleNotify;
+            mSolidworksApplication.OnIdleNotify += this.swApp_OnIdleNotify2;
+
+            return 0;
+        }
+
+        private int swApp_OnIdleNotify2()
+        {
+            int lErrors = 0;
+            int lWarnings = 0;
+
+            //ModelDocExtension modelDocExtension = activeDoc.Extension;
+            //modelDocExtension.Rebuild((int)swRebuildOptions_e.swForceRebuildAll);
+            activeDoc.ForceRebuild3(false);
+            bool status = activeDoc.Save3((int)swSaveAsOptions_e.swSaveAsOptions_Silent, ref lErrors, ref lWarnings);
+            Debug.WriteLine("save was successful: " + status.ToString());
+
+            mSolidworksApplication.OnIdleNotify -= this.swApp_OnIdleNotify2;
             return 0;
         }
 
@@ -241,7 +261,7 @@ namespace UnToolbox
             using (var rk = Microsoft.Win32.Registry.LocalMachine.CreateSubKey(ketPath))
             {
                 //Load Add-in when solidworks opens
-                rk.SetValue(null, 0);
+                rk.SetValue(null, 1);
 
                 //set solidworks add-in title and description
                 rk.SetValue("Title", "UnToolbox");
