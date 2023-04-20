@@ -132,6 +132,9 @@ namespace UnToolbox
             saveFile.FileName = Path.GetFileName(currentFileName);
 
             AssemblyDoc assemblyDoc = (AssemblyDoc)activeDoc;
+
+            if (saveFile.ShowDialog() == DialogResult.Cancel)
+                return;
             
             //make part independent if the save as dialog box is ok
             if (saveFile.ShowDialog() == DialogResult.OK && saveFile.FileName != currentFileName)
@@ -167,7 +170,10 @@ namespace UnToolbox
             if (comp2 == null)
                 return 0;
 
-            //if part is lightweight change to resolved
+            /// only way to check if part is part is toolbox. resolving lightweight and supressed parts is to slow
+            /// 
+
+            // if part is lightweight change to resolved
             //swComponentSuppressionState_e suppressionState = (swComponentSuppressionState_e)comp2.GetSuppression2();
             //if (suppressionState == swComponentSuppressionState_e.swComponentLightweight)
             //{
