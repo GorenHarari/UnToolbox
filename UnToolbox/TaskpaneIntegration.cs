@@ -156,19 +156,50 @@ namespace UnToolbox
         {
             //check wether the selected part in the assembly is toolbox or not
             int isToolboxPart = 0;
+            //int retVal = 0;
+            //bool isLightWeight = false;
             SelectionMgr selectionMgr = (SelectionMgr)activeDoc.SelectionManager;
+            swSelectType_e swSelectType = (swSelectType_e)selectionMgr.GetSelectedObjectType3(1, -1);
+            Debug.WriteLine(swSelectType);
+
             Component2 comp2 = selectionMgr.GetSelectedObjectsComponent4(1, -1);
+            //in case root assembly is selected with right click
+            if (comp2 == null)
+                return 0;
+
+            //if part is lightweight change to resolved
+            //swComponentSuppressionState_e suppressionState = (swComponentSuppressionState_e)comp2.GetSuppression2();
+            //if (suppressionState == swComponentSuppressionState_e.swComponentLightweight)
+            //{
+            //    retVal = comp2.SetSuppression2((int)swComponentSuppressionState_e.swComponentResolved);
+            //    isLightWeight = true;
+            //}
+            //Debug.WriteLine(suppressionState);
+
+
             ModelDoc2 selectedModelDoc = comp2.GetModelDoc2();
+            //in case component is suppressed or lightweight
+            if (selectedModelDoc == null)
+                return 0;
+
             ModelDocExtension modelDocExtension = selectedModelDoc.Extension;
             isToolboxPart = modelDocExtension.ToolboxPartType;
+
+            //return part to lightweight state
+            //if(isLightWeight)
+            //{
+            //    retVal = comp2.SetSuppression2((int)swComponentSuppressionState_e.swComponentLightweight);
+            //}
+
             //if it is toolbox show the icon in the context sensitive menu, hide it if it not
             if (isToolboxPart != (int)swToolBoxPartType_e.swNotAToolboxPart)
             {
                 Debug.WriteLine("Toolbox part was selected in a assembly document.");
                 selectedFilePath = selectedModelDoc.GetPathName();
-                isToolboxPart = 1;
+                return 1;
             }
-            return isToolboxPart;
+
+            return 0;
         }
         #endregion
 
