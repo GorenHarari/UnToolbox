@@ -41,6 +41,8 @@ namespace UnToolbox
         private string pathMod = string.Empty;
         //DLL location
         static readonly string assemblyFolder = Path.GetDirectoryName(Assembly.GetExecutingAssembly().CodeBase).Replace(@"file:\", "");
+        //DLL version
+        //private static readonly string version = FileVersionInfo.GetVersionInfo(Assembly.GetExecutingAssembly().CodeBase).FileVersion;
         //icons location in reference to the DLL
         static readonly string iconPath20x20 = Path.Combine(assemblyFolder , @"Resources\untoolbox icon 20x20.png");
         static readonly string iconPath32x32 = Path.Combine(assemblyFolder , @"Resources\untoolbox icon 32x32.png");
@@ -78,6 +80,7 @@ namespace UnToolbox
             var ok = mSolidworksApplication.SetAddinCallbackInfo2(0, this, mSwCookie);
 
             //add the icon to the relevant context sensitive menus
+            Debug.WriteLine(assemblyFolder);
             bool resultCodeA = swFrame.AddMenuPopupIcon3((int)swDocumentTypes_e.swDocASSEMBLY, (int)swSelectType_e.swSelFACES, "Third-party context-sensitive", mSwCookie, "CSCallbackFunction", "CSEnable", "", imageList);
             resultCodeA = swFrame.AddMenuPopupIcon3((int)swDocumentTypes_e.swDocASSEMBLY, (int)swSelectType_e.swSelCOMPONENTS, "Third-party context-sensitive", mSwCookie, "CSCallbackFunction", "CSEnable", "", imageList);
 
