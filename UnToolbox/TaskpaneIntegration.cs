@@ -3,6 +3,7 @@ using SolidWorks.Interop.swconst;
 using SolidWorks.Interop.swpublished;
 using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.Diagnostics;
 using System.IO;
 using System.Linq;
@@ -121,10 +122,23 @@ namespace UnToolbox
         {
             Debug.WriteLine("Context sensitive menu icon was clicked");
 
-            //initialize the save as dialob box
+            //get all loade docs names to prevent naming collision with newly created part
+            List<string> loadedDocsNames = new List<string>();
+            int docCount = mSolidworksApplication.GetDocumentCount();
+            Debug.WriteLine(docCount.ToString());
+            object[] loadedDocs = mSolidworksApplication.GetDocuments();
+            foreach (object doc in loadedDocs)
+            {
+                ModelDoc2 doc2 = (ModelDoc2)doc;
+                string name = Path.GetFileNameWithoutExtension(doc2.GetPathName());
+                Debug.WriteLine(name);
+                loadedDocsNames.Add(name);
+            }
+
+
+            //initialize the save as dialog box
             SaveFileDialog saveFile = new SaveFileDialog();
             saveFile.DefaultExt = ".sldprt";
-            saveFile.AddExtension = true;
             saveFile.Title = "Save As";
             saveFile.InitialDirectory = Path.GetDirectoryName(activeDoc.GetPathName());
             //store the cuuurent file name to compare to the new file name
@@ -133,25 +147,25 @@ namespace UnToolbox
 
             AssemblyDoc assemblyDoc = (AssemblyDoc)activeDoc;
 
-            if (saveFile.ShowDialog() == DialogResult.Cancel)
-                return;
-            
-            //make part independent if the save as dialog box is ok
-            if (saveFile.ShowDialog() == DialogResult.OK && saveFile.FileName != currentFileName)
+            if (saveFile.ShowDialog() == DialogResult.OK)
             {
-                pathMod = saveFile.FileName;
-                Debug.WriteLine("Save file to: " + pathMod);
-                bool retVal = assemblyDoc.MakeIndependent(pathMod);
-                Debug.WriteLine("Make independent returned: " + retVal.ToString());
+                //make part independent if the save as dialog box is ok
+                if (loadedDocsNames.Contains(Path.GetFileNameWithoutExtension(saveFile.FileName)))
+                {
+                    Debug.WriteLine(saveFile.FileName);
+                    MessageBox.Show("File name already exists. \nPlease select different file name");
+                    CSCallbackFunction();
+                }
+                else
+                {
+                    pathMod = saveFile.FileName;
+                    Debug.WriteLine("Save file to: " + pathMod);
+                    bool retVal = assemblyDoc.MakeIndependent(pathMod);
+                    Debug.WriteLine("Make independent returned: " + retVal.ToString());
+                    //add event listener to when solidworks is idle, this is need to implement the referenced file change in the assembly after the make independent
+                    mSolidworksApplication.OnIdleNotify += this.swApp_OnIdleNotify;
+                }
             }
-            else
-            {
-                MessageBox.Show("please select different file name");
-                CSCallbackFunction();
-            }
-
-            //add event listener to when solidworks is idle, this is need to implement the referenced file change in the assembly after the make independent
-            mSolidworksApplication.OnIdleNotify += this.swApp_OnIdleNotify;
         }
 
         //desides wether to show or hide the icon in the context sensitive menu
