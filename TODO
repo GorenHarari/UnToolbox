@@ -1,1 +1,2 @@
 - find right rebuild sequence to change icon from toolbox to regular part in the assembly design tree
+- installer not working when updating version or changing stuff in COM registration function
